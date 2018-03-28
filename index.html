@@ -1,147 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="initial-scale=1">
-<title>Parsedown converter (HTML to Markdown)</title>
-<link rel="stylesheet" href="css/normalize.css"></link>
-<style>
-  .cf:before,
-  .cf:after {
-      content: " ";
-      display: table;
-  }
-
-  .cf:after {
-      clear: both;
-  }
-
-  .cf {
-      *zoom: 1;
-  }
-
-  * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-
-  body {
-    background-color: #ccc;
-    margin: 0 auto;
-    font-size: 14px;
-    font-family: sans-serif;
-    line-height: 1.4;
-    color: #333;
-  }
-
-  header {
-    padding: 1em;
-    overflow: hidden;
-    background-color: #fff;
-  }
-
-  a,
-  a:visited {
-    font-weight: 700;
-    color: #4A90E2;
-    text-decoration: none;
-  }
-
-  h1 {
-    float: left;
-    margin: 0;
-    font-size: 1em;
-  }
-
-  h2 {
-    color: #fff;
-    margin-bottom: 0;
-  }
-
-  .col {
-    padding: 0 10px;
-  }
-
-  textarea {
-    width: 100%;
-    height: 600px;
-    margin: 0;
-    padding: .5em;
-    overflow: auto;
-    border: none;
-    background-color: #fff;
-    font-family: courier, monospace;
-    font-size: inherit;
-    color: inherit;
-  }
-
-  #input {
-    background: #333;
-    color: #fff;
-  }
-
-  @media (min-width: 768px) {
-    body {
-      font-size: 16px;
-    }
-
-    .col {
-      float: left;
-      width: 50%;
-      padding: 0 15px;
-    }
-
-    .row {
-      padding-right: 15px;
-      padding-left: 15px;
-    }
-  }
-</style>
-<script src="js/to-markdown.js"></script>
-<script>
-(function () {
-  var input, output;
-
-  function updateOutput() {
-    output.value = toMarkdown(input.value, { gfm: true });
-  }
-
-  document.addEventListener("DOMContentLoaded", function(event) {
-    input = document.getElementById('input');
-    output = document.getElementById('output');
-
-    input.addEventListener('input', updateOutput, false);
-    input.addEventListener('keydown', updateOutput, false);
-
-    updateOutput();
-  });
-})();
-</script>
-</head>
-<body>
-  <header>
-    <h1>Parsedown converter <small>HTML to Markdown</small></h1>
-  </header>
-  <div class="row cf">
-    <div class="col">
-      <h2>HTML</h2>
-      <textarea id="input" cols="100" rows="10"><h3>Some HTML</h3>
-
-<p>Hello world! This demonstrates <a href="https://github.com/dewanee-es/parsedown">Parsedown converter</a> (HTML to Markdown).</p>
-
-<hr />
-
-<ol>
-  <li>Number 1</li>
-  <li>Number Two</li>
-</ol></textarea>
+  <head>
+    <meta charset="utf-8">
+    <title>Parsedown converter (HTML to Markdown)</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lux/bootstrap.min.css" />
+    <style>
+      body { display: flex; flex-direction: column; height: 100vh; }
+      .container-fluid { display: flex; flex-direction: column; height: 100%; }
+      h2 { margin-top: 1rem; }
+      textarea { width: 100%; height: 100%; box-sizing: border-box; }
+    </style>
+    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+    <script src="https://unpkg.com/turndown-plugin-gfm/dist/turndown-plugin-gfm.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <span class="navbar-brand">Parsedown <small>converter</small></span>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="text-center"><h2>HTML</h2></div>
+          <textarea rows="15" id="input"></textarea>
+        </div>
+		    <div class="col">
+          <div class="text-center"><h2>Markdown</h2></div>
+          <textarea rows="15" readonly id="output"></textarea>
+		    </div>
+      </div>
     </div>
+    <script>
+    (function () {
+      var input = document.getElementById('input')
+      var output = document.getElementById('output')
+      var gfm = window.turndownPluginGfm.gfm
+      var turndownService = new window.TurndownService(options())
+      turndownService.use(gfm)
+      
+      input.addEventListener('input', update)
 
-    <div class="col">
-      <h2>Markdown</h2>
-      <textarea readonly id="output"></textarea>
-    </div>
-  </div>
-</body>
+      function update () {
+        output.value = turndownService.turndown(input.value)
+        }
+
+      function options () {
+        return {
+          hr: '- - -',
+          emDelimiter: '*'
+        }
+      }
+    })()
+    </script>
+  </body>
 </html>
