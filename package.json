@@ -1,0 +1,27 @@
+{
+  "name": "html2markdown",
+  "version": "1.0.0",
+  "description": "HTML to Markdown converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dewanee-es/parsedown.git"
+  },
+  "keywords": [
+    "html",
+    "markdown"
+  ],
+  "author": "dewanee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dewanee-es/parsedown/issues"
+  },
+  "homepage": "https://github.com/dewanee-es/parsedown#readme",
+  "dependencies": {
+    "turndown": "^5.0.3",
+    "turndown-plugin-gfm": "^1.0.2"
+  }
+}

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Parsedown converter (HTML to Markdown)</title>
+    <title>HTML2Markdownn converter</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lux/bootstrap.min.css" />
     <style>
       body { display: flex; flex-direction: column; height: 100vh; }
@@ -14,10 +14,11 @@
     </style>
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
     <script src="https://unpkg.com/turndown-plugin-gfm/dist/turndown-plugin-gfm.js"></script>
+    <script src="convert.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <span class="navbar-brand">Parsedown <small>converter</small></span>
+      <span class="navbar-brand">HTML2Markdown <small>converter</small></span>
     </nav>
     <div class="container-fluid">
       <div class="row">
@@ -33,23 +34,14 @@
     </div>
     <script>
     (function () {
-      var input = document.getElementById('input')
-      var output = document.getElementById('output')
-      var gfm = window.turndownPluginGfm.gfm
-      var turndownService = new window.TurndownService(options())
-      turndownService.use(gfm)
+      var input = document.getElementById('input');
+      var output = document.getElementById('output');
+      var converter = Html2Markdown(window.TurndownService, window.turndownPluginGfm.gfm);
       
-      input.addEventListener('input', update)
+      input.addEventListener('input', update);
 
       function update () {
-        output.value = turndownService.turndown(input.value)
-      }
-
-      function options () {
-        return {
-          hr: '- - -',
-          emDelimiter: '*'
-        }
+        output.value = converter.convert(input.value);
       }
     })()
     </script>
